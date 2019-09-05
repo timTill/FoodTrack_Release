@@ -1,0 +1,68 @@
+﻿@model FoodTracker.Models.ViewModels.FoodViewModel
+@{
+	ViewData["Title"] = "Delete";
+}
+
+<br />
+<h2 class="text-info">Delete Food Type</h2>
+<br />
+<form method="post">
+	<div class="backgroundWhiteBorder row">
+		<div class="col-8">
+			<input type="hidden" asp-for="Food.ID" />
+			<fieldset disabled>
+				<div class="form-group row">
+					<div class="col-4">
+						<label asp-for="Food.Name" class="custom-label"></label>
+					</div>
+					<div class="col-8">
+						<input asp-for="Food.Name" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-4">
+						<label asp-for="Food.CategoryId" class="custom-label"></label>
+					</div>
+					<div class="col-8">
+						<input asp-for="Food.Category.Name" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-4">
+						<label asp-for="Food.SubCategoryId" class="custom-label"></label>
+					</div>
+					<div class="col-8">
+						<input asp-for="Food.SubCategory.Name" class="form-control" />
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-4">
+						<label asp-for="Food.Measurement" class="custom-label"></label>
+					</div>
+					<div class="col-8">
+						<input asp-for="Food.Measurement" class="form-control" />
+					</div>
+				</div>
+
+			</fieldset>
+		</div>
+		<div class="col-1"></div>
+		<div class="col-3">			
+		</div>
+		<div class="col-8">
+			<div class="col-8 offset-4">
+				<partial name="_DeleteAndBackToListButton" model="Model.Food.ID" />
+			</div>
+		</div>
+	</div>
+</form>
+@section Scripts{
+	<script>tinymce.init({
+                selector: 'textarea',
+                plugins: "lists",
+                toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist",
+                menubar: 'file edit format',
+                readonly: 1
+            });</script>
+	<script>tinymce.init({ selector: 'textarea' });</script>
+}

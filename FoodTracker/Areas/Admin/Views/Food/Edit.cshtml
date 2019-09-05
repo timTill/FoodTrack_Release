@@ -1,0 +1,99 @@
+﻿@model FoodTracker.Models.ViewModels.FoodViewModel
+@using FoodTracker.Extensions
+@{
+	ViewData["Title"] = "Create";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h2 class="text-info">Edit Food Type</h2>
+<br />
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+	<div class="border backgroundWhite row">		
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<div class="col-8">
+			
+			<div class="form-group row">
+				<label asp-for="Food.Name" class="col-sm-2 col-form-label"></label>
+				<div class="col-sm-10">
+					<input asp-for="Food.Name" class="form-control" placeholder="Name" />
+					<span asp-validation-for="Food.Name" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-2">
+					<label asp-for="Food.CategoryId" class="col-form-label"></label>
+				</div>
+				<div class="col-5">
+					<select asp-for="@Model.Food.CategoryId" id="CategoryId"
+							asp-items="Model.Category.ToSelectListItem(Model.Food.CategoryId)" class="form-control"></select>
+					<span asp-validation-for="Food.CategoryId" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-2">
+					<label asp-for="Food.SubCategoryId" class="col-form-label"></label>
+				</div>
+				<div class="col-5">
+					<select asp-for="@Model.Food.SubCategoryId" name="SubCategoryId" id="SubCategoryId"
+							asp-items="@Model.SubCategory.ToSelectListItem(Model.Food.SubCategoryId)" class="form-control"></select>
+					<span asp-validation-for="Food.SubCategoryId" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label asp-for="Food.Measurement" class="col-sm-2 col-form-label"></label>
+				<div class="col-sm-10">
+					<select asp-for="Food.Measurement" class="custom-select mr-sm-2"
+							asp-items="Html.GetEnumSelectList<MeasType>()">
+						<option value="">Please Select</option>
+					</select>
+					<span asp-validation-for="Food.Measurement" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+		<div class="col-3 offset-1">
+
+		</div>
+		<div class="col-8">
+			<div class="col-8 offset-4">
+				<partial name="_EditAndBackToListButton" model="Model.Food.ID" />
+			</div>
+		</div>
+
+	</div>
+</form>
+@section Scripts{
+	<script>
+	tinymce.init({
+			selector: 'textarea',
+			plugins: "lists",
+			menubar: 'file edit format'
+		});</script>
+
+	<script type="text/javascript">
+        $(document).ready(function () {            
+            $('#CategoryId').change(function () {
+                getSubCategory();
+            });
+        });
+
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+            var ddlsoruce = '#CategoryId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryId').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                });
+
+                $('#SubCategoryId').html(items);
+            })
+        }
+	</script>
+
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

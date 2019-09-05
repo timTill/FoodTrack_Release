@@ -1,0 +1,815 @@
+﻿!!!_layout.cs
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FoodTracker</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
+    </environment>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FoodTracker</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <partial name="_CookieConsentPartial" />
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2019 - FoodTracker - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+        </script>
+    </environment>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+----------
+index.cshtml
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+----
+
+
+create cshtml
+
+@model FoodTracker.Models.ViewModels.FoodViewModel
+@using FoodTracker.Extensions
+@{
+	ViewData["Title"] = "Create";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h2 class="text-info">Create FoodItem</h2>
+<br />
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+	<div class="border backgroundWhite">
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<div class="form-group row">
+			<div class="col-2">
+				<label asp-for="Food.Name" class="col-form-label"></label>
+			</div>
+			<div class="col-5">
+				<input asp-for="Food.Name" class="form-control" />
+			</div>
+			<span asp-validation-for="Food.Name" class="text-danger"></span>
+		</div>
+		<div class="form-group row">
+			<div class="col-2">
+				<label asp-for="Food.Description" class="col-form-label"></label>
+			</div>
+			<div class="col-5">
+				@Html.TextAreaFor(m => m.Food.Description)
+			</div>
+			<span asp-validation-for="Food.Description" class="text-danger"></span>
+		</div>
+		<div class="form-group row">
+			<label asp-for="Food.BestBefore" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="Food.BestBefore" class="form-control" placeholder="Best before" />
+				<span asp-validation-for="Food.BestBefore" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label asp-for="Food.QuantityLeft" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<select asp-for="Food.QuantityLeft" class="custom-select mr-sm-2"
+						asp-items="Html.GetEnumSelectList<QuantityLeft>()">
+					<option value="">Please Select</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-2">
+				<label asp-for="Food.CategoryId" class="col-form-label"></label>
+			</div>
+			<div class="col-5">
+				<select asp-for="@Model.Food.CategoryId" id="CategoryId"
+				asp-items="Model.Category.ToSelectListItem(Model.Food.CategoryId)" class="form-control"></select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-2">
+				<label asp-for="Food.SubCategoryId" class="col-form-label"></label>
+			</div>
+			<div class="col-5">
+				<select asp-for="@Model.Food.SubCategoryId" name="SubCategoryId" id="SubCategoryId"
+				asp-items="@(new SelectList(string.Empty,"Id","Name"))" class="form-control"></select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-5 offset-2">
+				<partial name="_CreateAndBackToListButton" />
+			</div>
+		</div>
+	</div>
+</form>
+@section Scripts{	
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+            $('#CategoryId').change(function () {
+                getSubCategory();
+            });
+        });
+
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+            var ddlsoruce = '#CategoryId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryId').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                });
+
+                $('#SubCategoryId').html(items);
+            })
+        }
+	</script>
+
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+edit.cshtml
+
+@model FoodTracker.Models.ViewModels.FoodViewModel
+@using FoodTracker.Extensions
+@{
+	ViewData["Title"] = "Create";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h2 class="text-info">Edit FoodItem</h2>
+<br />
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+	<div class="border backgroundWhite row">
+		<input type="hidden" asp-for="Food.ID" />
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		div class="form-group row">
+		<label asp-for="Food.Name" class="col-sm-2 col-form-label"></label>
+		<div class="col-sm-10">
+			<input asp-for="Food.Name" class="form-control" placeholder="Name" />
+			<span asp-validation-for="Food.Name" class="text-danger"></span>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<div class="col-2">
+			<label asp-for="Food.CategoryId" class="col-form-label"></label>
+		</div>
+		<div class="col-5">
+			<select asp-for="@Model.Food.CategoryId" id="CategoryId"
+					asp-items="Model.Category.ToSelectListItem(Model.Food.CategoryId)" class="form-control"></select>
+			<span asp-validation-for="Food.CategoryId" class="text-danger"></span>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<div class="col-2">
+			<label asp-for="Food.SubCategoryId" class="col-form-label"></label>
+		</div>
+		<div class="col-5">
+			<select asp-for="@Model.Food.SubCategoryId" name="SubCategoryId" id="SubCategoryId"
+					asp-items="@(new SelectList(string.Empty,"Id","Name"))" class="form-control"></select>
+			<span asp-validation-for="Food.SubCategoryId" class="text-danger"></span>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label asp-for="Food.Measurement" class="col-sm-2 col-form-label"></label>
+		<div class="col-sm-10">
+			<select asp-for="Food.Measurement" class="custom-select mr-sm-2"
+					asp-items="Html.GetEnumSelectList<MeasType>()">
+				<option value="">Please Select</option>
+			</select>
+			<span asp-validation-for="Food.Measurement" class="text-danger"></span>
+		</div>
+	</div>
+
+	</div>
+	<div class="col-3 offset-1">		
+	</div>
+	<div class="col-8">
+		<div class="col-8 offset-4">
+			<partial name="_EditAndBackToListButton" model="Model.MenuItem.Id" />
+		</div>
+	</div>
+
+	</div>
+</form>
+@section Scripts{
+	<script>tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });</script>
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+            $('#CategoryId').change(function () {
+                getSubCategory();
+            });
+        });
+
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+            var ddlsoruce = '#CategoryId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryId').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                });
+
+                $('#SubCategoryId').html(items);
+            })
+        }
+	</script>
+
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+---
+
+index.cshtml
+
+@model IEnumerable<Food>
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br /><br />
+<div class="border backgroundWhite">
+	<div class="row">
+		<div class="col-6">
+			<h2 class="text-info"> Menu Item List</h2>
+		</div>
+		<div class="col-6 text-right">
+			<partial name="_CreateButtonPartial" />
+		</div>
+	</div>
+	<br />
+	<div>
+		@if (Model.Count() > 0)
+		{
+			<table class="table table-striped border">
+				<tr class="table-secondary">
+					<th>
+						@Html.DisplayNameFor(m => m.Name)
+					</th>
+					<th>
+						@Html.DisplayNameFor(m => m.Description)
+					</th>
+					<th>
+						@Html.DisplayNameFor(m => m.CategoryId)
+					</th>
+					<th>
+						@Html.DisplayNameFor(m => m.SubCategoryId)
+					</th>
+					<th></th>
+					<th></th>
+				</tr>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							@Html.DisplayFor(m => item.Name)
+						</td>
+						<td>
+							@Html.DisplayFor(m => item.Description)
+						</td>
+						<td>
+							@Html.DisplayFor(m => item.Category.Name)
+						</td>
+						<td>
+							@Html.DisplayFor(m => item.SubCategory.Name)
+						</td>
+						<td>
+							<partial name="_TableButtonPartial" model="item.ID" />
+						</td>
+					</tr>
+				}
+			</table>
+		}
+		else
+		{
+			<p>No menu item exists...</p>
+		}
+	</div>
+</div>
+
+
+---
+
+edit.cshtml
+
+@model FoodTracker.Models.ViewModels.FoodViewModel
+@using FoodTracker.Extensions
+@{
+	ViewData["Title"] = "Create";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h2 class="text-info">Edit Food Type</h2>
+<br />
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+	<div class="border backgroundWhite row">
+		<input type="hidden" asp-for="Food.ID" />
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<div class="col-8">
+			
+			<div class="form-group row">
+				<label asp-for="Food.Name" class="col-sm-2 col-form-label"></label>
+				<div class="col-sm-10">
+					<input asp-for="Food.Name" class="form-control" placeholder="Name" />
+					<span asp-validation-for="Food.Name" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-2">
+					<label asp-for="Food.CategoryId" class="col-form-label"></label>
+				</div>
+				<div class="col-5">
+					<select asp-for="@Model.Food.CategoryId" id="CategoryId"
+							asp-items="Model.Category.ToSelectListItem(Model.Food.CategoryId)" class="form-control"></select>
+					<span asp-validation-for="Food.CategoryId" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-2">
+					<label asp-for="Food.SubCategoryId" class="col-form-label"></label>
+				</div>
+				<div class="col-5">
+					<select asp-for="@Model.Food.SubCategoryId" name="SubCategoryId" id="SubCategoryId"
+							asp-items="@(new SelectList(string.Empty,"Id","Name"))" class="form-control"></select>
+					<span asp-validation-for="Food.SubCategoryId" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label asp-for="Food.Measurement" class="col-sm-2 col-form-label"></label>
+				<div class="col-sm-10">
+					<select asp-for="Food.Measurement" class="custom-select mr-sm-2"
+							asp-items="Html.GetEnumSelectList<MeasType>()">
+						<option value="">Please Select</option>
+					</select>
+					<span asp-validation-for="Food.Measurement" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+		<div class="col-3 offset-1">
+
+		</div>
+		<div class="col-8">
+			<div class="col-8 offset-4">
+				<partial name="_EditAndBackToListButton" model="Model.Food.ID" />
+			</div>
+		</div>
+
+	</div>
+</form>
+@section Scripts{
+	<script>
+	tinymce.init({
+			selector: 'textarea',
+			plugins: "lists",
+			menubar: 'file edit format'
+		});</script>
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+            $('#CategoryId').change(function () {
+                getSubCategory();
+            });
+        });
+
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+            var ddlsoruce = '#CategoryId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryId').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                });
+
+                $('#SubCategoryId').html(items);
+            })
+        }
+	</script>
+
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+----
+
+_ThumbnailArePartial.cshtml
+@if (item.Spicyness == "1")
+								{
+									<img srcset="/images/mild.png" title="Mild" />
+								}
+								@if (item.Spicyness == "2")
+								{
+									<img srcset="/images/spicy.png" title="Spicy" />
+								}
+								@if (item.Spicyness == "3")
+								{
+									<img srcset="/images/veryspicy.png" title="Very Spicy" />
+								}
+
+
+<div class="col-4 text-right" style="color:maroon">
+								<h4>$@item.Price</h4>
+							</div>
+
+
+_ThumbnailCategory.cshtml (full)
+
+@model IEnumerable<Food>
+@*
+	For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@if (Model.Count() > 0)
+{
+	<div class="col-12 post @Model.FirstOrDefault().Category.Name.Replace(" ",string.Empty) menu-restaurant">
+		<div class="row">
+			<h3 class="text-success"> @Model.FirstOrDefault().Category.Name </h3>
+		</div>
+		@foreach (var item in Model)
+		{
+			<div class="border border-info rounded col-12" style="margin-bottom:10px; margin-top:10px; padding:10px">
+				<div class="row">
+					<div class="col-md-3 col-sm-12">
+						<label class="text-primary" style="font-size:21px;color:maroon">@item.Name</label>
+					</div>
+					<div class="col-md-9 col-sm-12">
+						<div class="row pr-3">
+							<div class="col-8">
+								<label class="text-primary" style="font-size:21px;color:black">@item.BestBefore</label>	
+							</div>
+						</div>
+						<div class="col-4">
+							
+						</div>
+
+						<div class="row col-12 text-justify d-none d-md-block">
+							<p>@Html.Raw(item.Description)</p>
+						</div>
+						<div class="col-md-3 col-sm-12 offset-md-9 text-center">
+							<a asp-action="Details" class="btn btn-success form-control" asp-route-id="@item.ID">Details</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+		<div class="p-4"></div>
+	</div>
+}
+
+----
+thumbnailsubcategory.cshtml
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - FoodTracker</title>
+
+	<environment include="Development">
+		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	</environment>
+	<environment exclude="Development">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+			  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+			  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+			  crossorigin="anonymous"
+			  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+		<script src="~/lib/jquery/jquery.js"></script>
+		<script src="~/lib/bootstrap/js/bootstrap.js"></script>
+	</environment>
+	<link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark border-bottom box-shadow mb-3">
+			<div class="container">
+				<a class="navbar-brand" asp-area="Customer" asp-controller="Home" asp-action="Index"></a>
+				<button class="navbar-toggler float-sm-left" type="button"
+						data-toggle="collapse"
+						data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+					<partial name="_LoginPartial" />
+					<ul class="navbar-nav flex-grow-1">
+						<li>
+							<a class="nav-link" role="button" aria-expanded="false"
+							   asp-action="Index" asp-controller="Home" asp-area="User">
+								FoodList
+							</a>
+						</li>
+						<li>
+							<a class="nav-link" href="#" role="button" aria-expanded="false">
+								Shopping List
+							</a>
+						</li>
+						<li class="nav-item dropdown text-white-50 float-right text-right">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropDownMenuLink" role="button"
+							   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Content Management
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
+								<a class="dropdown-item" asp-action="Index" asp-controller="Category" asp-area="Admin">Category</a>
+								<a class="dropdown-item" asp-action="Index" asp-controller="SubCategory" asp-area="Admin">SubCategory</a>
+								<a class="dropdown-item" asp-action="Index" asp-controller="Food" asp-area="Admin">Food Types</a>
+							</div>
+						</li>
+					</ul>					
+				</div>
+				<div class="float-right" style=" padding-top: 8px; padding-bottom: 0px; padding-right: 15px; line-height: 0.5;">
+					<input class="form-control" id="myInput" type="text" placeholder="Search..">
+					<br>
+				</div>
+			</div>			
+		</nav>		
+	</header>
+	<div class="container">
+		<partial name="_CookieConsentPartial" />
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+
+	<footer class="border-top footer text-muted">
+		<div class="container">
+			&copy; 2019 - FoodTracker - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+		</div>
+	</footer>
+
+	<environment include="Development">
+		<script src="~/lib/jquery/dist/jquery.js"></script>
+		<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+	</environment>
+	<environment exclude="Development">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+				asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+				asp-fallback-test="window.jQuery"
+				crossorigin="anonymous"
+				integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+		</script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+				asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+				asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+				crossorigin="anonymous"
+				integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+		</script>
+	</environment>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+
+	@RenderSection("Scripts", required: false)
+</body>
+</html>
+
+
+
+---
+
+addtostock.cshtml
+
+@model FoodTracker.Models.ViewModels.FoodStockCreate
+@{
+	ViewData["Title"] = "Create";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Add Food Item to stock</h2>
+<br />
+
+
+<form enctype="multipart/form-data" asp-controller="home" asp-action="Create" method="post" class="mt-3">
+	<div class="backgroundWhiteBorder row">
+		<div class="col-8">
+			<fieldset disabled>
+				<div class="form-group row">
+					<div class="col-4">
+						<label asp-for="Food.Name" class="custom-label"></label>
+					</div>
+					<div class="col-8">
+						<input asp-for="Food.Name" class="form-control" />
+					</div>
+				</div>
+			</fieldset>
+		</div>
+
+		<div class="col-8">
+			<fieldset disabled>
+				<div class="form-group row">
+					<div class="col-4">
+						<label asp-for="Food.Category.Name" class="custom-label"></label>
+					</div>
+					<div class="col-8">
+						<input asp-for="Food.Category.Name" class="form-control" />
+					</div>
+				</div>
+			</fieldset>
+		</div>
+
+		<div class="col-8">
+			<fieldset disabled>
+				<div class="form-group row">
+					<div class="col-4">
+						<label asp-for="Food.SubCategory.Name" class="custom-label"></label>
+					</div>
+					<div class="col-8">
+						<input asp-for="Food.SubCategory.Name" class="form-control" />
+					</div>
+				</div>
+			</fieldset>
+		</div>
+
+		<div class="col-8">
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="Food.Description" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<input asp-for="Food.Description" class="form-control" />
+					<span asp-validation-for="Food.Description" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-8">
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="Food.BestBefore" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<input asp-for="Food.BestBefore" class="form-control" />
+					<span asp-validation-for="Food.BestBefore" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-8">
+			<fieldset disabled>
+				<div class="form-group row">
+					<div class="col-4">
+						<label asp-for="Food.QuantityLeft" class="custom-label"></label>
+					</div>
+					<div class="col-8">
+						<select asp-for="Food.Quantity" class="custom-select mr-sm-2"
+								asp-items="Html.GetEnumSelectList<QuantityLeft>()">
+							<option value="">Please Select</option>
+						</select>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+
+		<div class="col-8">			
+				<div class="form-group row">
+					<div class="col-4">
+						<label asp-for="Unit" class="custom-label"></label>
+					</div>
+					<div class="col-8">
+						<input asp-for="Unit" class="form-control" />
+						<span asp-validation-for="Unit" class="text-danger"></span>
+					</div>
+				</div>
+		</div>
+
+		<div class="col-8">
+			<fieldset disabled>
+				<div class="form-group row">
+					<div class="col-4">
+						<label asp-for="Description" class="custom-label"></label>
+					</div>
+					<div class="col-8">
+						<input asp-for="Description" class="form-control" />
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+
+
+
+	<div class=text-danger asp-validation-summary="All"></div>
+
+	<div id="submitbtn" class="form-group row">
+		<div class="col-sm-10">
+			<button type="submit" class="btn btn-primary">Create</button>
+		</div>
+	</div>
+
+</form>
+
+@section Scripts{
+	<script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+            $('#CategoryId').change(function () {
+                getSubCategory();
+            });
+        });
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+            var ddlsoruce = '#CategoryId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryId').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                });
+
+                $('#SubCategoryId').html(items);
+            })
+        }
+	</script>
+
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,93 @@
+﻿@model FoodTracker.Models.ViewModels.FoodViewModel
+@using FoodTracker.Extensions
+@{
+	ViewData["Title"] = "Create";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h2 class="text-info">Create Food Type</h2>
+<br />
+
+
+<form enctype="multipart/form-data" asp-controller="home" asp-action="Create" method="post" class="mt-3">
+	<div class="form-group row">
+		<div class="col-3">
+			<label asp-for="Food.Name" class="col-form-label"></label>
+		</div>
+		<div class="col-5">
+			<input asp-for="Food.Name" class="form-control" placeholder="Name" />
+			<span asp-validation-for="Food.Name" class="text-danger"></span>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<div class="col-3">
+			<label asp-for="Food.CategoryId" class="col-form-label"></label>
+		</div>
+		<div class="col-5">
+			<select asp-for="@Model.Food.CategoryId" id="CategoryId"
+					asp-items="Model.Category.ToSelectListItem(Model.Food.CategoryId)" class="form-control"></select>
+			<span asp-validation-for="Food.CategoryId" class="text-danger"></span>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<div class="col-3">
+			<label asp-for="Food.SubCategoryId" class="col-form-label"></label>
+		</div>
+		<div class="col-5">
+			<select asp-for="@Model.Food.SubCategoryId" name="SubCategoryId" id="SubCategoryId"
+					asp-items="@(new SelectList(string.Empty,"Id","Name"))" class="form-control"></select>
+			<span asp-validation-for="Food.SubCategoryId" class="text-danger"></span>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<div class="col-3">
+			<label asp-for="Food.Measurement" class="col-form-label"></label>
+		</div>
+		<div class="col-5">
+			<select asp-for="Food.Measurement" class="custom-select mr-sm-2"
+					asp-items="Html.GetEnumSelectList<MeasType>()">
+				<option value="">Please Select</option>
+			</select>
+			<span asp-validation-for="Food.Measurement" class="text-danger"></span>
+		</div>
+	</div>
+
+	<div class=text-danger asp-validation-summary="All"></div>
+
+	<div id="submitbtn" class="form-group row">
+		<div class="col-sm-10">
+			<button type="submit" class="btn btn-primary">Create</button>
+		</div>
+	</div>
+
+</form>
+
+@section Scripts{
+	<script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+            $('#CategoryId').change(function () {
+                getSubCategory();
+            });
+        });
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+            var ddlsoruce = '#CategoryId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryId').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                });
+
+                $('#SubCategoryId').html(items);
+            })
+        }
+	</script>
+
+	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Food>
+<h4> @Model.FirstOrDefault().SubCategory.Name</h4>
+@foreach (var item in Model)
+{
+	<div class="border border-info rounded col-12" style="margin-bottom:10px; margin-top:10px; padding:10px">
+		<div class="row">
+			<div class="col-md-3 col-sm-12">
+				<label class="text-primary" style="font-size:21px;color:maroon">@item.Name</label>
+			</div>
+			<div class="col-md-9 col-sm-12">
+				<h4>Description</h4>
+
+			</div>
+			<div class="col-md-3 col-sm-12">
+				<h4>Best before</h4>
+			</div>
+			<div class="col-md-3 col-sm-12">
+				<h4>QuantityLeft</h4>
+			</div>
+
+			<label class="text-primary" style="font-size:21px;color:black">@item.BestBefore</label>
+			<div class="col-md-3 col-sm-12 offset-md-3 text-center">
+				<a asp-action="Details" class="btn btn-success form-control" asp-route-id="@item.ID">Details</a>
+			</div>
+		</div>
+	</div>
+}

@@ -1,0 +1,128 @@
+﻿@model Food
+@{
+	ViewData["Title"] = "Confirm Deletion";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2 class="text-info">Confirm FoodItem Deletion</h2>
+<br />
+
+<form method="post" asp-action="Nullify" asp-controller="Home" asp-area="User" asp-route-id="ID" enctype="multipart/form-data">
+	<input hidden asp-for="ID" />
+	<div class="backgroundWhiteBorder row">
+		<fieldset disabled>
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="Name" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<input asp-for="Name" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="Category" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<input asp-for="Category.Name" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="SubCategory" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<input asp-for="SubCategory.Name" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="Description" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<input asp-for="Description" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="BestBefore" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<input asp-for="BestBefore" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="QuantityLeft" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<select asp-for="QuantityLeft" class="custom-select mr-sm-2"
+							asp-items="Html.GetEnumSelectList<QuantityLeft>()">
+						<option value="">Please Select</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="Unit" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<input asp-for="Unit" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="Measurement" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<input asp-for="Measurement" class="form-control" />
+				</div>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="offset-3">
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-6">
+					<input type="submit" class="btn btn-danger form-control" value="Delete" />
+				</div>
+				<div class="col-6">
+					<a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+				</div>
+			</div>
+		</div>		
+	</div>	
+</form>
+
+@section Scripts{
+	<script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+            $('#CategoryId').change(function () {
+                getSubCategory();
+            });
+        });
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+            var ddlsoruce = '#CategoryId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryId').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>";
+                });
+                $('#SubCategoryId').html(items);
+            })
+        }
+	</script>
+}
