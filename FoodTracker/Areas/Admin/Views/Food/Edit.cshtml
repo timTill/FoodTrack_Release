@@ -8,10 +8,10 @@
 <h2 class="text-info">Edit Food Type</h2>
 <br />
 <form method="post" asp-action="Create" enctype="multipart/form-data">
-	<div class="border backgroundWhite row">		
+	<div class="border backgroundWhite row">
 		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 		<div class="col-8">
-			
+
 			<div class="form-group row">
 				<label asp-for="Food.Name" class="col-sm-2 col-form-label"></label>
 				<div class="col-sm-10">
@@ -21,21 +21,17 @@
 			</div>
 
 			<div class="form-group row">
-				<div class="col-2">
-					<label asp-for="Food.CategoryId" class="col-form-label"></label>
-				</div>
-				<div class="col-5">
+				<label asp-for="Food.CategoryId" class="col-sm-2 col-form-label"></label>
+				<div class="col-sm-10">
 					<select asp-for="@Model.Food.CategoryId" id="CategoryId"
 							asp-items="Model.Category.ToSelectListItem(Model.Food.CategoryId)" class="form-control"></select>
 					<span asp-validation-for="Food.CategoryId" class="text-danger"></span>
 				</div>
 			</div>
 
-			<div class="form-group row">
-				<div class="col-2">
-					<label asp-for="Food.SubCategoryId" class="col-form-label"></label>
-				</div>
-				<div class="col-5">
+			<div class="form-group row">				
+					<label asp-for="Food.SubCategoryId" class="col-sm-2 col-form-label"></label>				
+				<div class="col-sm-10">
 					<select asp-for="@Model.Food.SubCategoryId" name="SubCategoryId" id="SubCategoryId"
 							asp-items="@Model.SubCategory.ToSelectListItem(Model.Food.SubCategoryId)" class="form-control"></select>
 					<span asp-validation-for="Food.SubCategoryId" class="text-danger"></span>
@@ -52,6 +48,17 @@
 					<span asp-validation-for="Food.Measurement" class="text-danger"></span>
 				</div>
 			</div>
+
+			<div class="form-group row">
+				<label asp-for="Food.Priority" class="col-sm-2 col-form-label"></label>
+				<div class="col-sm-10">
+					<select asp-for="Food.Priority" class="custom-select mr-sm-2"
+							asp-items="Html.GetEnumSelectList<Priority>()">
+						<option value="">Please Select</option>
+					</select>
+					<span asp-validation-for="Food.Priority" class="text-danger"></span>
+				</div>
+			</div>
 		</div>
 		<div class="col-3 offset-1">
 
@@ -66,14 +73,14 @@
 </form>
 @section Scripts{
 	<script>
-	tinymce.init({
+		tinymce.init({
 			selector: 'textarea',
 			plugins: "lists",
 			menubar: 'file edit format'
 		});</script>
 
 	<script type="text/javascript">
-        $(document).ready(function () {            
+        $(document).ready(function () {
             $('#CategoryId').change(function () {
                 getSubCategory();
             });

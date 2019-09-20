@@ -1,0 +1,14 @@
+﻿@model Priority
+
+@if (Model == Priority.Magas)
+		{
+<img src="~/img/reddot.png" style="width:18px;height:18px;margin-bottom:6px" />
+		}
+@if (Model == Priority.Közepes)
+{
+	<img src="~/img/yellowdot.png" style="width:18px;height:18px;margin-bottom:6px" />
+}
+@if (Model == Priority.Alacsony)
+{
+	<img src="~/img/greendot.png" style="width:18px;height:18px;margin-bottom:6px" />
+}

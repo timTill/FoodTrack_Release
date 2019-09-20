@@ -104,6 +104,7 @@ namespace FoodTracker.Areas.Admin.Controllers
 			foodTypeFromDb.CategoryId = foodModel.Food.CategoryId;
 			foodTypeFromDb.SubCategoryId = foodModel.Food.SubCategoryId;
 			foodTypeFromDb.Measurement = foodModel.Food.Measurement;
+			foodTypeFromDb.Priority = foodModel.Food.Priority;
 			await _db.SaveChangesAsync();
 
 			return RedirectToAction(nameof(Index));

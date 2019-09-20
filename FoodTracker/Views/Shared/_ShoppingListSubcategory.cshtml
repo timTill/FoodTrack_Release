@@ -2,19 +2,18 @@
 <h4> @Model.FirstOrDefault().SubCategory.Name</h4>
 @foreach (var item in Model)
 {
-	<div class="border border-info rounded col-12" style="margin-bottom:10px; margin-top:10px; padding:10px">
+	<div class="border border-info rounded col-12 foodItem" style="margin-bottom:10px; margin-top:10px; padding:10px">
 		<div class="row">
-			<div class="col-md-2 col-sm-12">
+			<div class="col-md-2 col-sm-12 col-lg-3">
 				<label class="text-primary" style="font-size:21px;color:maroon">@item.Name</label>
+				<partial name="_FoodPriorityColoring.cshtml" model="item.Priority" />
 			</div>
-			<div class="col-md-1 col-sm-12">
-				
+			
+			<div class="col-md-2 col-sm-12">
+				<h4 class="text-info">@item.Description</h4>
 			</div>
 			<div class="col-md-2 col-sm-12">
-				<h4 class="text-danger">@item.Description</h4>
-			</div>
-			<div class="col-md-2 col-sm-12">
-				<h4 class="text-danger">@item.QuantityLeft</h4>
+				<partial name="_QuantityLeftColoring.cshtml" model="item.QuantityLeft" />				
 			</div>
 			<div class="col-md-2 col-sm-12">
 				

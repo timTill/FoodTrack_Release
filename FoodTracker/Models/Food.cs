@@ -42,6 +42,8 @@ namespace FoodTracker.Models
 		public QuantityLeft QuantityLeft { get; set; }
 		public int Unit { get; set; }
 		public MeasType Measurement { get; set; }
+		//[Range(0, 2, ErrorMessage = "Priority should be 0 or 1 or 2")]
+		public Priority Priority { get; set; }
 
 		/*
 		public override bool Equals(object obj)
@@ -61,6 +63,7 @@ namespace FoodTracker.Models
 		*/
 	}
 	public enum QuantityLeft { Semennyi = 0, Keves = 1, Adagnyi = 2, Sok = 3 }
+	public enum Priority { Magas = 0, Közepes =1, Alacsony =2}
 	public enum MeasType
 	{
 		kg,

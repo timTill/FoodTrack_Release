@@ -1,78 +1,62 @@
 ﻿@model Food
 @{
-	ViewData["Title"] = "Create";
+	ViewData["Title"] = "Confirm Food Type Deletion";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <br />
-<h2 class="text-info">Add Food Item to stock</h2>
+<h2 class="text-info">Remove @Model.Name from Food Types</h2>
 <br />
 
-<form method="post" asp-action="AddToStock" enctype="multipart/form-data">
+<form method="post" asp-action="DeleteFoodType" asp-controller="Shopping" asp-area="User" asp-route-id="ID" enctype="multipart/form-data">
 	<input hidden asp-for="ID" />
 	<div class="backgroundWhiteBorder row">
-		<div class="col-8">
-			<fieldset disabled>
-				<div class="form-group row">
-					<div class="col-4">
-						<label asp-for="Name" class="custom-label"></label>
-					</div>
-					<div class="col-8">
-						<input asp-for="Name" class="form-control" />
-					</div>
+		<fieldset disabled>
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="Name" class="custom-label"></label>
 				</div>
-			</fieldset>
-		</div>
-
-		<div class="col-8">
-			<fieldset disabled>
-				<div class="form-group row">
-					<div class="col-4">
-						<label asp-for="Category.Name" class="custom-label"></label>
-					</div>
-					<div class="col-8">
-						<input asp-for="Category.Name" class="form-control" />
-					</div>
+				<div class="col-8">
+					<input asp-for="Name" class="form-control" />
 				</div>
-			</fieldset>
-		</div>
+			</div>
 
-		<div class="col-8">
-			<fieldset disabled>
-				<div class="form-group row">
-					<div class="col-4">
-						<label asp-for="SubCategory.Name" class="custom-label"></label>
-					</div>
-					<div class="col-8">
-						<input asp-for="SubCategory.Name" class="form-control" />
-					</div>
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="Category" class="custom-label"></label>
 				</div>
-			</fieldset>
-		</div>
+				<div class="col-8">
+					<input asp-for="Category.Name" class="form-control" />
+				</div>
+			</div>
 
-		<div class="col-8">
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="SubCategory" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<input asp-for="SubCategory.Name" class="form-control" />
+				</div>
+			</div>
+
 			<div class="form-group row">
 				<div class="col-4">
 					<label asp-for="Description" class="custom-label"></label>
 				</div>
 				<div class="col-8">
-					<input asp-for="Description" class="form-control" />					
+					<input asp-for="Description" class="form-control" />
 				</div>
 			</div>
-		</div>
 
-		<div class="col-8">
 			<div class="form-group row">
 				<div class="col-4">
 					<label asp-for="BestBefore" class="custom-label"></label>
 				</div>
 				<div class="col-8">
-					<input asp-for="BestBefore" class="form-control" />					
+					<input asp-for="BestBefore" class="form-control" />
 				</div>
 			</div>
-		</div>
 
-		<div class="col-8">
 			<div class="form-group row">
 				<div class="col-4">
 					<label asp-for="QuantityLeft" class="custom-label"></label>
@@ -84,40 +68,39 @@
 					</select>
 				</div>
 			</div>
-		</div>
 
-		<div class="col-8">
 			<div class="form-group row">
 				<div class="col-4">
 					<label asp-for="Unit" class="custom-label"></label>
 				</div>
 				<div class="col-8">
-					<input asp-for="Unit" class="form-control" />					
+					<input asp-for="Unit" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-4">
+					<label asp-for="Measurement" class="custom-label"></label>
+				</div>
+				<div class="col-8">
+					<input asp-for="Measurement" class="form-control" />
+				</div>
+			</div>
+		</fieldset>
+	</div>
+
+	<div class="offset-3">
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-6">
+					<input type="submit" class="btn btn-danger form-control" value="Delete" />
+				</div>
+				<div class="col-6">
+					<a asp-action="Index" class="btn btn-success form-control">Back to List</a>
 				</div>
 			</div>
 		</div>
-
-		<div class="col-8">
-			<fieldset disabled>
-				<div class="form-group row">
-					<div class="col-4">
-						<label asp-for="Measurement" class="custom-label"></label>
-					</div>
-					<div class="col-8">
-						<input asp-for="Measurement" class="form-control" />
-					</div>
-				</div>
-			</fieldset>
-		</div>
-	</div>	
-
-
-	<div id="submitbtn" class="form-group row">
-		<div class="col-sm-10">
-			<button type="submit" class="btn btn-primary">Add to Stock</button>
-		</div>
 	</div>
-
 </form>
 
 @section Scripts{
@@ -141,5 +124,5 @@
                 $('#SubCategoryId').html(items);
             })
         }
-	</script>	
+	</script>
 }

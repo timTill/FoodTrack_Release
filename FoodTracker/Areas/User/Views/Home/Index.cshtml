@@ -2,27 +2,28 @@
 <br />
 @if (User.Identity.IsAuthenticated)
 {
-	<div class="backgroundWhite container">
-		<ul id="menu-filters" class="menu-filter-list list-inline text-center">
-			<li class="active btn btn-secondary ml-1 mr-1" data-filter=".menu-restaurant">Show All</li>
-			@foreach (var item in Model.Category)
-			{
-				<li class="ml-1 mr-1" data-filter=".@item.Name.Replace(" ",string.Empty)">@item.Name</li>
-			}
-		</ul>
-
-		@if (Model.FoodItem.Count() == 0)
+<div class="backgroundWhite container">
+	<ul id="menu-filters" class="menu-filter-list list-inline text-center">
+		<li class="active btn btn-secondary ml-1 mr-1" data-filter=".menu-restaurant">Show All</li>
+		@foreach (var item in Model.Category)
 		{
-			<h4 class="text-info text-center p-5">No fooditems available</h4>
+			<li class="ml-1 mr-1" data-filter=".@item.Name.Replace(" ",string.Empty)">@item.Name</li>
 		}
+	</ul>	
+	
 
-		@foreach (var category in Model.Category)
-		{
-			<div class="row" id="menu-wrapper">
-				<partial name="_FoodListIndexCategory" model="@Model.FoodItem.Where(u=>u.Category.Name.Equals(category.Name))" />
-			</div>
-		}
-	</div>
+	@if (Model.FoodItem.Count() == 0)
+	{
+		<h4 class="text-info text-center p-5">No fooditems available</h4>
+	}
+
+	@foreach (var category in Model.Category)
+	{
+		<div class="row" id="menu-wrapper">
+			<partial name="_FoodListIndexCategory" model="@Model.FoodItem.Where(u=>u.Category.Name.Equals(category.Name))" />
+		</div>
+	}
+</div>
 }
 else
 {

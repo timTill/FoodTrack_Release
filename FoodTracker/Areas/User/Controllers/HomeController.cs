@@ -32,13 +32,7 @@ namespace FoodTracker.Controllers
 				Category = await _db.Category.ToListAsync(),
 			};
 			return View(IndexVM);
-		}
-		
-
-		public IActionResult Privacy()
-		{
-			return View();
-		}
+		}				
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
@@ -62,7 +56,7 @@ namespace FoodTracker.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		public async Task<IActionResult> ConfirmDeletion(int? id)
+		public async Task<IActionResult> RemoveFromStockConf(int? id)
 		{
 			if (id != null)
 			{
@@ -94,7 +88,7 @@ namespace FoodTracker.Controllers
 
 			return RedirectToAction(nameof(Index));
 		}
-		
+
 		/*
 		public async Task<IActionResult> ConfirmAction(int? id)
 		{
@@ -105,6 +99,12 @@ namespace FoodTracker.Controllers
 			}
 			return RedirectToAction(nameof(Index));
 		}
+		public IActionResult Privacy()
+		{
+			return View();
+		}
+
+
 		*/
 	}
 }

@@ -22,11 +22,14 @@ namespace FoodTracker.Areas.User.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public async Task<IActionResult> Shopping()
+		public async Task<IActionResult> Index()
 		{
 			IndexViewModel IndexVM = new IndexViewModel()
 			{
-				FoodItem = await _db.Foods.Where(m => m.QuantityLeft == 0).Include(m => m.Category).
+				//FoodItem = await _db.Foods.Where(m => m.QuantityLeft == 0).Include(m => m.Category).
+				//Include(m => m.SubCategory).ToListAsync(),
+				//Category = await _db.Category.ToListAsync(),
+				FoodItem = await _db.Foods.Include(m => m.Category).
 				Include(m => m.SubCategory).ToListAsync(),
 				Category = await _db.Category.ToListAsync(),
 			};
@@ -56,5 +59,30 @@ namespace FoodTracker.Areas.User.Controllers
 			}
 			return View(selectedFood);
 		}
+
+		public async Task<IActionResult> DeleteFoodTypeConf(int? id)
+		{
+			if (id != null)
+			{
+				Food foodToConfirm = await _db.Foods.Where(f => f.ID == id).Include(f => f.SubCategory.Category).FirstOrDefaultAsync();
+				return View(foodToConfirm);
+			}
+			return RedirectToAction(nameof(Index));
+		}
+		
+		public async Task<IActionResult> DeleteFoodType(int? id)
+		{
+			if (id != null)
+			{
+				Food foodToDelete = await _db.Foods.FindAsync(id);
+				_db.Foods.Remove(foodToDelete);				
+				await _db.SaveChangesAsync();
+			}
+			return RedirectToAction(nameof(Index));
+		}
+
+
+
+
 	}
 }

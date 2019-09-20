@@ -48,7 +48,7 @@
 							</li>
 							<li>
 								<a class="nav-link" role="button" aria-expanded="false"
-								   asp-action="Shopping" asp-controller="Shopping" asp-area="User">
+								   asp-action="Index" asp-controller="Shopping" asp-area="User">
 									Needs
 								</a>
 							</li>
@@ -89,14 +89,14 @@
 									{
 										<a class="dropdown-item" asp-action="Export" asp-controller="Data" asp-area="Admin">Export</a>
 										<a class="dropdown-item" asp-action="Import" asp-controller="Data" asp-area="Admin">Import</a>
-									}									
+									}
 								</div>
-							</li>							
+							</li>
 						}
 					</ul>
 				</div>
 				<div class="float-right" style=" padding-top: 8px; padding-bottom: 0px; padding-right: 15px; line-height: 0.5;">
-					<input class="form-control" id="myInput" type="text" placeholder="Search..">
+					<input class="form-control" id="SearchBox" type="text" placeholder="Search..">
 					<br>
 				</div>
 			</div>
@@ -136,8 +136,17 @@
 	<script src="~/js/site.js" asp-append-version="true"></script>
 
 	@RenderSection("Scripts", required: false)
+
+	<script>
+		$(document).ready(function () {
+			$("#SearchBox").on("keyup", function () {
+				var value = $(this).val().toLowerCase();
+				$(".foodItem").filter(function () {
+					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+				});
+			});				
+		}
+		);
+	</script>
 </body>
 </html>
-
-
-
