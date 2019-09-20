@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTracker", "FoodTracker\FoodTracker.csproj", "{2383D602-06F1-4995-8A86-9FB0451E9D1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodTracker", "FoodTracker\FoodTracker.csproj", "{2383D602-06F1-4995-8A86-9FB0451E9D1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodTrackerTest", "FoodTrackerTest\FoodTrackerTest.csproj", "{5A686E4F-F14E-4866-8698-249AE48308B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Module1Training", "Module1Training\Module1Training.csproj", "{744D2ED9-0F31-4ED2-AD30-9D9BEF64018D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{2383D602-06F1-4995-8A86-9FB0451E9D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2383D602-06F1-4995-8A86-9FB0451E9D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2383D602-06F1-4995-8A86-9FB0451E9D1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A686E4F-F14E-4866-8698-249AE48308B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A686E4F-F14E-4866-8698-249AE48308B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A686E4F-F14E-4866-8698-249AE48308B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A686E4F-F14E-4866-8698-249AE48308B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{744D2ED9-0F31-4ED2-AD30-9D9BEF64018D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{744D2ED9-0F31-4ED2-AD30-9D9BEF64018D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{744D2ED9-0F31-4ED2-AD30-9D9BEF64018D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{744D2ED9-0F31-4ED2-AD30-9D9BEF64018D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

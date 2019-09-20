@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Creating an XML Tree using LINQ to XML-->
+<Foods>
+  <Categories>
+    <Category>
+      <CategoryID>0</CategoryID>
+      <Name>A</Name>
+    </Category>
+  </Categories>
+  <Subcategories>
+    <Subcategory>
+      <SubcategoryID>0</SubcategoryID>
+      <Name>b</Name>
+      <CategoryID>1</CategoryID>
+    </Subcategory>
+  </Subcategories>
+  <FoodItems>
+    <FoodItem>
+      <FoodID>0</FoodID>
+      <Name>c</Name>
+      <Description></Description>
+      <CategoryID>1</CategoryID>
+      <SubcategoryId>1</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>kg</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+  </FoodItems>
+</Foods>

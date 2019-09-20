@@ -813,3 +813,168 @@ addtostock.cshtml
 
 	@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using FoodTracker.Models.ViewModels;
+
+namespace FoodTracker.Models
+{
+	
+	public class ImportExportManager : IDataManager
+	{
+		public const string XMLinPath = @"C:\Users\Szabolcs\Source\Repos\FoodTracker\FoodTracker\FoodTracker\Port\DataToImport.xml";
+		public void ExportXML(PortDBViewModel input)
+		{
+			
+		}
+
+		public void ImportXML()
+		{
+			//PortDBViewModel originalParsedXML = Testing.ParseXML(Testing.XMLinPath);
+			PortDBViewModel originalParsedXML = ParseXML(Testing.XMLinPath);
+			//PortDBViewModel normalizedXml = Testing.normalizeIDs(originalParsedXML);
+			PortDBViewModel normalizedXml = normalizeIDs(originalParsedXML);
+
+			/*
+			Testing.AddManyCategoriesFromParamToDBTest(normalizedXml.Categories);
+			Testing.AddManySubCategoriesFromParamToDBTest(normalizedXml.Subcategories);
+			Testing.AddManyFoodItemFromParamToDBTest(normalizedXml.Foods);
+			*/
+
+			Testing.AddManyCategoriesFromParamToDBTest(normalizedXml.Categories);
+			Testing.AddManySubCategoriesFromParamToDBTest(normalizedXml.Subcategories);
+			Testing.AddManyFoodItemFromParamToDBTest(normalizedXml.Foods);
+		}
+
+		public static PortDBViewModel normalizeIDs(PortDBViewModel input)
+		{
+			//Initialize data counts
+			int CategoryCount = input.Categories.Count();
+			int SubCategoryCount = input.Subcategories.Count();
+			int FoodItemsCount = input.Foods.Count();
+
+			List<Category> Categories2DB = input.Categories.ToList();
+			List<SubCategory> SubCategories2DB = input.Subcategories.ToList();
+			List<Food> Foods2DB = input.Foods.ToList();
+
+			//Normalize subcategory.CategoryId to new Category.ID
+			//1. Take all Categories
+			for (int i = 0; i < CategoryCount; i++)
+			{
+				//2. Check all subcategories
+				foreach (var subcategory in SubCategories2DB)
+				{
+					//if an "old" subcategory.categID mathes and "old" Category.ID... (foreign key ref.)
+					if (subcategory.CategoryId == Categories2DB[i].Id)
+					{
+						//replace subcateg.Categ by the index number+1 of the categ
+						// (cf. categ index+1 value will be the new ID in the new "clean" DB).						
+						subcategory.CategoryId = i + 1;
+					}
+				}
+			}
+
+			//normalize the food.SubCategoryId to new SubCategory.ID
+			//1. Take all Subcategories
+			for (int i = 0; i < SubCategoryCount; i++)
+			{
+				//2. iterate all foods
+				foreach (var food in Foods2DB)
+				{
+					//3. if an "old" food.subcategID matches the "old" subcateg.id (foreign key ref.)
+					if (food.SubCategoryId == SubCategories2DB[i].Id)
+					{
+						//4. replace the food.subcateg with the index+1 (index+1 will be
+						//the new subcat.ID in the "clean" DB).
+						food.SubCategoryId = i + 1;
+					}
+				}
+			}
+
+			//normalize the Food.Category to new Category.ID
+			//1. Take all categories
+			for (int i = 0; i < CategoryCount; i++)
+			{
+				//2. Iterate through all the foods
+				foreach (var food in Foods2DB)
+				{
+					//3. if an "old" food.Category mathes the "old" category.ID (foreign key ref.)
+					if (food.CategoryId == Categories2DB[i].Id)
+					{
+						//4. update food.CategID with index+1 (cycle index+1 will be the new Categ.ID)
+						food.CategoryId = i + 1;
+						//5. set all food.ID to 0 (EF can then insert it to DB)
+						food.ID = 0;
+					}
+				}
+			}
+
+			//set all Category ID to 0 (EF can then insert it to DB)
+			foreach (var item in Categories2DB)
+			{
+				item.Id = 0;
+			}
+
+			//set all Subcategory ID to 0 (EF can then insert it to DB)
+			foreach (var item in SubCategories2DB)
+			{
+				item.Id = 0;
+			}
+
+			PortDBViewModel output = new PortDBViewModel
+			{
+				Categories = Categories2DB,
+				Subcategories = SubCategories2DB,
+				Foods = Foods2DB
+			};
+			return output;
+		}
+
+		public static PortDBViewModel ParseXML(string XMLPath)
+		{
+			PortDBViewModel DB_VM = new PortDBViewModel();
+
+			XDocument doc = XDocument.Load(XMLPath);
+			IEnumerable<Category> categories = from c in doc.Descendants("Category")
+											   select new Category()
+											   {
+												   Id = (int)c.Element("CategoryID"),
+												   Name = (string)c.Element("Name")
+											   };
+
+			IEnumerable<SubCategory> subCategories = from s in doc.Descendants("Subcategory")
+													 select new SubCategory()
+													 {
+														 Id = (int)s.Element("SubcategoryID"),
+														 Name = (string)s.Element("Name"),
+														 CategoryId = (int)s.Element("CategoryID")
+													 };
+
+			IEnumerable<Food> Foods = from f in doc.Descendants("FoodItem")
+									  select new Food()
+									  {
+										  ID = (int)f.Element("FoodID"),
+										  Name = (string)f.Element("Name"),
+										  Description = (string)f.Element("Description"),
+										  CategoryId = (int)f.Element("CategoryID"),
+										  SubCategoryId = (int)f.Element("SubcategoryId"),
+										  BestBefore = string.IsNullOrEmpty((string)f.Element("BestBefore")) ? (DateTime?)null : (DateTime)f.Element("BestBefore"),
+										  Unit = (int)f.Element("Unit"),
+										  QuantityLeft = Enum.Parse<QuantityLeft>((string)f.Element("QuanityLeft")),
+										  Measurement = Enum.Parse<MeasType>((string)f.Element("Measurement"))
+									  };
+
+			DB_VM.Categories = categories;
+			DB_VM.Subcategories = subCategories;
+			DB_VM.Foods = Foods;
+			return DB_VM;
+		}
+
+	}
+}

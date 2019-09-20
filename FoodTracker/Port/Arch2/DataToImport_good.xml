@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!--Creating an XML Tree using LINQ to XML-->
+<Foods>
+  <Categories>
+    <Category>
+      <CategoryID>7</CategoryID>
+      <Name>Fagyasztó</Name>
+    </Category>
+    <Category>
+      <CategoryID>8</CategoryID>
+      <Name>Spejz</Name>
+    </Category>
+    <Category>
+      <CategoryID>9</CategoryID>
+      <Name>Hűtő</Name>
+    </Category>
+  </Categories>
+  <Subcategories>
+    <Subcategory>
+      <SubcategoryID>2</SubcategoryID>
+      <Name>Húsok</Name>
+      <CategoryID>9</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>5</SubcategoryID>
+      <Name>Tejtemék</Name>
+      <CategoryID>9</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>6</SubcategoryID>
+      <Name>Zöldség</Name>
+      <CategoryID>9</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>7</SubcategoryID>
+      <Name>Mirelit Gyümölcs</Name>
+      <CategoryID>7</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>8</SubcategoryID>
+      <Name>Félkész ételek</Name>
+      <CategoryID>7</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>10</SubcategoryID>
+      <Name>Konzerv</Name>
+      <CategoryID>8</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>11</SubcategoryID>
+      <Name>Tartós zöldség</Name>
+      <CategoryID>8</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>13</SubcategoryID>
+      <Name>Olajok, mártások, szószok</Name>
+      <CategoryID>8</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>14</SubcategoryID>
+      <Name>Gyümölcs</Name>
+      <CategoryID>9</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>15</SubcategoryID>
+      <Name>Zöldség</Name>
+      <CategoryID>7</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>16</SubcategoryID>
+      <Name>Gabonafélék</Name>
+      <CategoryID>8</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>17</SubcategoryID>
+      <Name>Fűszerek</Name>
+      <CategoryID>8</CategoryID>
+    </Subcategory>
+    <Subcategory>
+      <SubcategoryID>18</SubcategoryID>
+      <Name>Disznósajt</Name>
+      <CategoryID>9</CategoryID>
+    </Subcategory>
+  </Subcategories>
+  <FoodItems>
+    <FoodItem>
+      <FoodID>10</FoodID>
+      <Name>Kolbász</Name>
+      <Description />
+      <CategoryID>9</CategoryID>
+      <SubcategoryId>2</SubcategoryId>
+      <BestBefore>2019-08-31T00:00:00</BestBefore>
+      <Unit>15</Unit>
+      <Measurement>dkg</Measurement>
+      <QuanityLeft>Adagnyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>11</FoodID>
+      <Name>Padlizsán</Name>
+      <Description></Description>
+      <CategoryID>9</CategoryID>
+      <SubcategoryId>6</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>kg</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>12</FoodID>
+      <Name>barack</Name>
+      <Description />
+      <CategoryID>9</CategoryID>
+      <SubcategoryId>14</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>dkg</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>13</FoodID>
+      <Name>Rántott sajt</Name>
+      <Description></Description>
+      <CategoryID>7</CategoryID>
+      <SubcategoryId>8</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>kg</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>14</FoodID>
+      <Name>Kelbimbó</Name>
+      <Description />
+      <CategoryID>7</CategoryID>
+      <SubcategoryId>15</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>kg</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>15</FoodID>
+      <Name>Dobozos Tej</Name>
+      <Description />
+      <CategoryID>9</CategoryID>
+      <SubcategoryId>5</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>l</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>16</FoodID>
+      <Name>Sajt</Name>
+      <Description></Description>
+      <CategoryID>9</CategoryID>
+      <SubcategoryId>5</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>dkg</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>17</FoodID>
+      <Name>Kenyér</Name>
+      <Description></Description>
+      <CategoryID>8</CategoryID>
+      <SubcategoryId>16</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>dkg</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>18</FoodID>
+      <Name>Kifli</Name>
+      <Description></Description>
+      <CategoryID>8</CategoryID>
+      <SubcategoryId>16</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>db</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>19</FoodID>
+      <Name>OIiva olaj</Name>
+      <Description>Darab</Description>
+      <CategoryID>8</CategoryID>
+      <SubcategoryId>13</SubcategoryId>
+      <BestBefore>2019-09-01T00:00:00</BestBefore>
+      <Unit>2</Unit>
+      <Measurement>l</Measurement>
+      <QuanityLeft>Keves</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>20</FoodID>
+      <Name>Túró Rudi</Name>
+      <Description />
+      <CategoryID>9</CategoryID>
+      <SubcategoryId>5</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>db</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>21</FoodID>
+      <Name>Meggy</Name>
+      <Description></Description>
+      <CategoryID>7</CategoryID>
+      <SubcategoryId>7</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>kg</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>22</FoodID>
+      <Name>Szilva</Name>
+      <Description></Description>
+      <CategoryID>7</CategoryID>
+      <SubcategoryId>7</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>kg</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+    <FoodItem>
+      <FoodID>23</FoodID>
+      <Name>Zalai</Name>
+      <Description />
+      <CategoryID>9</CategoryID>
+      <SubcategoryId>2</SubcategoryId>
+      <BestBefore />
+      <Unit>0</Unit>
+      <Measurement>dkg</Measurement>
+      <QuanityLeft>Semennyi</QuanityLeft>
+    </FoodItem>
+  </FoodItems>
+</Foods>

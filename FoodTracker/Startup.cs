@@ -41,6 +41,7 @@ namespace FoodTracker
 					Configuration.GetConnectionString("DefaultConnection")));
 
 			services.AddScoped<IDbInitializer, DbInitializer>();
+			services.AddScoped<IDataManager, ImportExportManager>();
 
 			services.AddIdentity<IdentityUser, IdentityRole>()
 				.AddDefaultTokenProviders()
@@ -48,7 +49,7 @@ namespace FoodTracker
 				.AddEntityFrameworkStores<ApplicationDbContext>();
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-			services.AddScoped<IFoodRepository, SQLFoodRepository>();
+			services.AddScoped<IFoodRepository, SQLFoodRepository>();			
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

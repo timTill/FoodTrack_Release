@@ -78,6 +78,20 @@
 									<i class="fas fa-users"></i>Users
 								</a>
 							</li>
+							<li class="nav-item dropdown text-white-50">
+								<a class="nav-link dropdown-toggle" role="button" aria-expanded="false"
+								   href="#" id="navbarDropDownData" data-toggle="dropdown"
+								   aria-haspopup="true">
+									<i class="fas fa-database"></i>Data
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropDownData">
+									@if (User.IsInRole(SD.OwnerUser) || User.IsInRole(SD.AdminUser))
+									{
+										<a class="dropdown-item" asp-action="Export" asp-controller="Data" asp-area="Admin">Export</a>
+										<a class="dropdown-item" asp-action="Import" asp-controller="Data" asp-area="Admin">Import</a>
+									}									
+								</div>
+							</li>							
 						}
 					</ul>
 				</div>
