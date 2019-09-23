@@ -24,7 +24,7 @@ namespace FoodTracker.Areas.Admin.Controllers
 
 		[HttpGet]
 		public async Task<IActionResult> Index()
-		{
+		{			
 			return View(await _db.Category.ToListAsync());
 		}
 
@@ -109,16 +109,16 @@ namespace FoodTracker.Areas.Admin.Controllers
 
 		[HttpGet]
 		public async Task<IActionResult> Details(int? id)
-		{
-			if (id == null)
+		{			
+			if (id == null )
 			{
-				return NotFound();
+				return RedirectToAction("ResourceNotFound", "Home", new { area = "Admin" });				
 			}
-
 			var category = await _db.Category.FindAsync(id);
+
 			if (category == null)
 			{
-				return NotFound();
+				return RedirectToAction("ResourceNotFound", "Home", new { area = "Admin" });				
 			}
 			return View(category);
 		}
