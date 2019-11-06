@@ -103,10 +103,10 @@
       <Description></Description>
       <CategoryID>3</CategoryID>
       <SubcategoryId>1</SubcategoryId>
-      <BestBefore />
-      <Unit>0</Unit>
+      <BestBefore>2019-09-28T00:00:00</BestBefore>
+      <Unit>15</Unit>
       <Measurement>dkg</Measurement>
-      <QuanityLeft>Semennyi</QuanityLeft>
+      <QuanityLeft>Adagnyi</QuanityLeft>
     </FoodItem>
     <FoodItem>
       <FoodID>2</FoodID>
@@ -114,10 +114,10 @@
       <Description></Description>
       <CategoryID>1</CategoryID>
       <SubcategoryId>14</SubcategoryId>
-      <BestBefore />
-      <Unit>0</Unit>
+      <BestBefore>2019-09-30T00:00:00</BestBefore>
+      <Unit>5</Unit>
       <Measurement>adag</Measurement>
-      <QuanityLeft>Semennyi</QuanityLeft>
+      <QuanityLeft>Sok</QuanityLeft>
     </FoodItem>
     <FoodItem>
       <FoodID>3</FoodID>
@@ -169,10 +169,10 @@
       <Description>Darab</Description>
       <CategoryID>2</CategoryID>
       <SubcategoryId>8</SubcategoryId>
-      <BestBefore />
-      <Unit>0</Unit>
+      <BestBefore>2019-09-01T00:00:00</BestBefore>
+      <Unit>2</Unit>
       <Measurement>l</Measurement>
-      <QuanityLeft>Semennyi</QuanityLeft>
+      <QuanityLeft>Keves</QuanityLeft>
     </FoodItem>
     <FoodItem>
       <FoodID>8</FoodID>
@@ -235,10 +235,10 @@
       <Description>Finom :)</Description>
       <CategoryID>1</CategoryID>
       <SubcategoryId>5</SubcategoryId>
-      <BestBefore />
-      <Unit>0</Unit>
+      <BestBefore>2019-09-21T00:00:00</BestBefore>
+      <Unit>2</Unit>
       <Measurement>kg</Measurement>
-      <QuanityLeft>Semennyi</QuanityLeft>
+      <QuanityLeft>Sok</QuanityLeft>
     </FoodItem>
     <FoodItem>
       <FoodID>14</FoodID>
@@ -279,10 +279,10 @@
       <Description>Erdőből :)</Description>
       <CategoryID>4</CategoryID>
       <SubcategoryId>15</SubcategoryId>
-      <BestBefore />
-      <Unit>0</Unit>
+      <BestBefore>2019-12-27T00:00:00</BestBefore>
+      <Unit>15</Unit>
       <Measurement>kg</Measurement>
-      <QuanityLeft>Semennyi</QuanityLeft>
+      <QuanityLeft>Sok</QuanityLeft>
     </FoodItem>
   </FoodItems>
 </Foods>

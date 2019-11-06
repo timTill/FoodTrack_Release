@@ -33,8 +33,7 @@ namespace FoodTracker.Models
 		}		
 
 		public void ImportXML()
-		{
-			
+		{			
 			//PortDBViewModel originalParsedXML = ParseXML(SD.XMLinPath);			
 			PortDBViewModel originalParsedXML = ParseXML(XMLFileDynamicPath);
 			PortDBViewModel normalizedXml = normalizeIDs(originalParsedXML);
@@ -101,22 +100,22 @@ namespace FoodTracker.Models
 								new XElement("Description", foodItem.Description),
 								new XElement("CategoryID", foodItem.CategoryId),
 								new XElement("SubcategoryId", foodItem.SubCategoryId),
-								new XElement("BestBefore", foodItem.BestBefore),
-								new XElement("Unit", foodItem.Unit),
+								new XElement("BestBefore", null),
+								new XElement("Unit", 0),
 								new XElement("Measurement", foodItem.Measurement),
-								new XElement("QuanityLeft", foodItem.QuantityLeft)
+								new XElement("QuanityLeft", QuantityLeft.Semennyi)
 								))
 							));
 			return xmlDocument;
 		}
 
-
 		private void DumpDataToXML(PortDBViewModel DB_VM)
 		{
 			XDocument xmlDocument = XMLSerializerFromDB(DB_VM);
-			xmlDocument.Save(XMLFileDynamicPath);
+			string filename = "Data_" + DateTime.Now.ToShortDateString().Replace('.', '_').Replace(' ', '_') + ".xml";
+			string XMLFileToExport = Path.Combine(env.WebRootPath, "Data", filename);			
+			xmlDocument.Save(XMLFileToExport);
 		}
-
 
 		private PortDBViewModel normalizeIDs(PortDBViewModel input)
 		{

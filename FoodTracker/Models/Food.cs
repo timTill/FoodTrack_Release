@@ -39,6 +39,8 @@ namespace FoodTracker.Models
 		[ForeignKey("SubCategoryId")]
 		public virtual SubCategory SubCategory { get; set; }
 
+		public bool IsInCart { get; set; }
+
 		public QuantityLeft QuantityLeft { get; set; }
 		public int Unit { get; set; }
 		public MeasType Measurement { get; set; }
